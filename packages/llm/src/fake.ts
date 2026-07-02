@@ -70,7 +70,7 @@ export class FakeOrchestrator implements Orchestrator {
     }
     if (/receipt|tall(y|ies)/.test(q) && !/\baudit\b/.test(q)) {
       const named = ctx.holdings.filter((h) => q.includes(h.name.toLowerCase()));
-      const wanted = /all|every/.test(q) && named.length === 0 ? ctx.holdings : named;
+      const wanted = /\b(?:all|every)\b/.test(q) && named.length === 0 ? ctx.holdings : named;
       for (const h of wanted.slice(0, 5)) {
         actions.push({ type: 'request_document', docKind: 'bailiff_receipts', holdingId: h.id });
       }

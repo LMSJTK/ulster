@@ -1,4 +1,5 @@
 import Fastify, { type FastifyInstance, type FastifyReply } from 'fastify';
+import fastifyStatic from '@fastify/static';
 import { randomUUID } from 'node:crypto';
 import { z } from 'zod';
 import {
@@ -211,7 +212,11 @@ export function buildApp(opts: AppOptions): FastifyInstance {
   });
 
   if (opts.staticRoot) {
-    void registerStatic(app, opts.staticRoot);
+    app.register(fastifyStatic, { root: opts.staticRoot });
+    app.setNotFoundHandler((req, reply) => {
+      if (req.url.startsWith('/api/')) reply.code(404).send({ error: 'not found' });
+      else reply.sendFile('index.html');
+    });
   }
 
   return app;
@@ -222,14 +227,5 @@ function sseHead(reply: FastifyReply): void {
     'Content-Type': 'text/event-stream',
     'Cache-Control': 'no-cache',
     Connection: 'keep-alive',
-  });
-}
-
-async function registerStatic(app: FastifyInstance, root: string): Promise<void> {
-  const fastifyStatic = await import('@fastify/static');
-  await app.register(fastifyStatic.default, { root });
-  app.setNotFoundHandler((req, reply) => {
-    if (req.url.startsWith('/api/')) reply.code(404).send({ error: 'not found' });
-    else reply.sendFile('index.html');
   });
 }
