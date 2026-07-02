@@ -1,0 +1,14 @@
+{
+  "extends": "./tsconfig.base.json",
+  "include": [
+    "packages/engine/src",
+    "packages/engine/test",
+    "packages/llm/src",
+    "packages/llm/test",
+    "packages/content-ulster/src",
+    "packages/server/src",
+    "packages/server/test",
+    "packages/web/src",
+    "scripts"
+  ]
+}

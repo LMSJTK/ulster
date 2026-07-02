@@ -1,0 +1,23 @@
+{
+  "name": "ulster",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "description": "The Red Earl — a keep-management strategy game played entirely through meetings and paperwork",
+  "workspaces": [
+    "packages/*"
+  ],
+  "scripts": {
+    "test": "vitest run",
+    "typecheck": "tsc --noEmit",
+    "dev": "node scripts/dev.mjs",
+    "dev:server": "npm run dev -w @redearl/server",
+    "dev:web": "npm run dev -w @redearl/web",
+    "build": "npm run build -w @redearl/web",
+    "start": "npm run start -w @redearl/server"
+  },
+  "devDependencies": {
+    "typescript": "^5.6.0",
+    "vitest": "^2.1.0"
+  }
+}
