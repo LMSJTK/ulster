@@ -1,0 +1,17 @@
+services:
+  redearl:
+    build: .
+    ports:
+      - "8787:8787"
+    environment:
+      # Optional: without a key the game runs on the deterministic offline fake.
+      - ANTHROPIC_API_KEY=${ANTHROPIC_API_KEY:-}
+      # Optional model overrides:
+      # - REDEARL_ACTOR_MODEL=claude-sonnet-5
+      # - REDEARL_SMALL_MODEL=claude-haiku-4-5-20251001
+      # - REDEARL_DM_MODEL=claude-sonnet-5
+    volumes:
+      - redearl-saves:/app/packages/server/data
+
+volumes:
+  redearl-saves:
